@@ -1,0 +1,276 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+:root {
+  --font-digital: 'Share Tech Mono', monospace;
+  --neon-green: #39ff14;
+  --led-bg: #1a1e1d;
+  --board-bg: #30353b;
+  --board-border: #22262a;
+}
+
+.stadium-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+  background: #0f172a url('/cartoon_stadium.jpg') center/cover no-repeat;
+  font-family: 'Inter', sans-serif;
+  color: #fff;
+  overflow: hidden;
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0);
+  transition: box-shadow 0.8s ease-in-out;
+}
+
+.stadium-container.focus-track,
+.stadium-container.focus-scoreboard {
+  box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.7);
+}
+
+/* Scoreboard */
+.jumbotron-scoreboard {
+  background-color: var(--board-bg);
+  border: 10px solid var(--board-border);
+  border-radius: 20px;
+  padding: 1.5rem;
+  width: 800px;
+  max-width: 95%;
+  box-shadow:
+    0 20px 40px rgba(0, 0, 0, 0.7),
+    inset 0 0 10px rgba(0, 0, 0, 0.5);
+  position: relative;
+  margin-top: 2rem;
+}
+
+/* Rivets on corners */
+.jumbotron-scoreboard::before,
+.jumbotron-scoreboard::after {
+  content: '';
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: #111;
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2px #444,
+    730px 0 0 0 #111,
+    730px 0 0 2px #444;
+  /* Top right */
+}
+
+.jumbotron-scoreboard::before {
+  top: 15px;
+  left: 15px;
+}
+
+.jumbotron-scoreboard::after {
+  bottom: 15px;
+  left: 15px;
+  box-shadow:
+    0 0 0 2px #444,
+    730px 0 0 0 #111,
+    730px 0 0 2px #444;
+  /* Bottom right */
+}
+
+.scoreboard-top-modern {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.server-selector {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 30px;
+  padding: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  width: fit-content;
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.server-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 24px;
+  cursor: pointer;
+  color: #888;
+  font-size: 0.95rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  user-select: none;
+}
+
+.server-option:hover:not(.disabled) {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.server-option.active {
+  background: #3498db;
+  color: #fff;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.4);
+}
+
+.server-option.active.lol-tr {
+  background: #c89b3c; /* League Gold */
+  box-shadow: 0 4px 15px rgba(200, 155, 60, 0.4);
+}
+
+.server-option.disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.scoreboard-metrics {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.metric-col {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5rem;
+  position: relative;
+}
+
+.metric-title {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: bold;
+  font-size: 0.85rem;
+  color: #f1c40f;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.metric-box {
+  background-color: var(--led-bg);
+  background-image: radial-gradient(#2a2e2d 1px, transparent 1px);
+  background-size: 4px 4px;
+  border-radius: 4px;
+  border: 2px solid #111;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.val-container {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.metric-value {
+  font-family: var(--font-digital);
+  font-size: 2.5rem;
+  color: var(--neon-green);
+  text-shadow: 0 0 8px rgba(57, 255, 20, 0.4);
+}
+
+.empty-value {
+  color: transparent;
+  text-shadow: none;
+}
+
+.metric-unit {
+  font-family: var(--font-digital);
+  font-size: 0.9rem;
+  color: var(--neon-green);
+  opacity: 0.7;
+}
+
+.scoreboard-actions {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* GO Button */
+.go-btn {
+  width: 50%;
+  min-width: 250px;
+  background: transparent;
+  border: 2px dashed var(--neon-green);
+  border-radius: 8px;
+  color: var(--neon-green);
+  font-family: var(--font-digital);
+  font-size: 1.5rem;
+  padding: 0.5rem 0;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: all 0.2s;
+  box-shadow: inset 0 0 10px rgba(57, 255, 20, 0.1);
+}
+
+.go-btn:hover:not(:disabled) {
+  background: rgba(57, 255, 20, 0.1);
+  box-shadow: inset 0 0 15px rgba(57, 255, 20, 0.3), 0 0 10px rgba(57, 255, 20, 0.2);
+}
+
+.go-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Oval Track */
+.oval-track-container {
+  margin-top: 3rem;
+  width: 800px;
+  max-width: 95%;
+}
+
+@media (max-width: 850px) {
+  .scoreboard-metrics {
+    flex-wrap: wrap;
+  }
+
+  .metric-col {
+    min-width: 45%;
+  }
+
+  .go-btn {
+    position: static;
+    width: 100%;
+    margin-top: 1rem;
+  }
+}
+
+.jumbotron-scoreboard,
+.oval-track-container {
+  transition: all 0.8s ease-in-out;
+  position: relative;
+}
+
+.stadium-container.focus-track .jumbotron-scoreboard {
+  filter: brightness(0.3);
+  transform: scale(0.95);
+}
+
+.stadium-container.focus-track .oval-track-container {
+  filter: brightness(1.2) drop-shadow(0 0 30px rgba(255, 255, 255, 0.4));
+  transform: scale(1.05);
+  z-index: 10;
+}
+
+.stadium-container.focus-scoreboard .oval-track-container {
+  filter: brightness(0.3);
+  transform: scale(0.95);
+}
+
+.stadium-container.focus-scoreboard .jumbotron-scoreboard {
+  filter: brightness(1.1) drop-shadow(0 0 40px rgba(255, 255, 255, 0.2));
+  transform: scale(1.02);
+  z-index: 10;
+}
