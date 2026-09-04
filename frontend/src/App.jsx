@@ -89,6 +89,9 @@ function App() {
         ? 'https://speed.cloudflare.com/__down?bytes=0' 
         : 'https://clients3.google.com/generate_204';
 
+      // İlk istek (Warm-up): DNS çözümü ve TLS el sıkışması (Handshake) süresini atlamak için
+      try { await fetch(pingUrl, { mode: 'no-cors', cache: 'no-store' }); } catch (e) {}
+
       for (let i = 0; i < 5; i++) {
         try {
           const pStart = performance.now();
@@ -103,9 +106,15 @@ function App() {
       }
 
       if (pings.length > 0) {
-        const avgPing = pings.reduce((a, b) => a + b, 0) / pings.length;
-        finalPing = Math.round(avgPing);
-        finalJitter = pings.length > 1 ? Math.round(Math.abs(pings[pings.length-1] - pings[0]) / 2) : 0;
+        // Ping sürelerini küçükten büyüğe sırala
+        pings.sort((a, b) => a - b);
+        
+        // En düşük süreyi (minimum ping) baz al (gerçek raw latency'ye en yakın olanı budur)
+        const minPing = pings[0];
+        finalPing = Math.round(minPing);
+        
+        // Jitter hesaplaması (En yüksek ping ile en düşük ping arasındaki fark)
+        finalJitter = pings.length > 1 ? Math.round(pings[pings.length-1] - pings[0]) : 0;
       }
 
       // 2. DOWNLOAD
