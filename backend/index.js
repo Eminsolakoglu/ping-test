@@ -15,7 +15,7 @@ app.use(express.json());
 
 const pingLimiter = rateLimit({
     windowMs: 1 * 60 * 1000, // 1 dakika
-    max: 10, // Her IP için 1 dakikada en fazla 10 istek
+    max: 100, // Her IP için 1 dakikada en fazla 100 istek
     message: { error: 'Çok fazla istek attınız, lütfen bekleyin.' }
 });
 
@@ -52,7 +52,7 @@ app.get('/api/ping', pingLimiter, async (req, res) => {
             packetLoss: pingRes.packetLoss
         });
     } catch (err) {
-        res.status(500).json({ error: 'Ping işlemi başarısız.' });
+        res.status(500).json({ error: 'Ping işlemi başarısız.', details: err.message });
     }
 });
 
