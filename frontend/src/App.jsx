@@ -87,7 +87,7 @@ function App() {
       let pings = [];
       for (let i = 0; i < 5; i++) {
         try {
-          const pRes = await fetch(`http://localhost:3001/api/ping?target=${selectedServer}`);
+          const pRes = await fetch(`https://ping-test-ikgp.onrender.com/api/ping?target=${selectedServer}`);
           const pData = await pRes.json();
           if (pData.time && pData.time !== -1) {
             pings.push(pData.time);

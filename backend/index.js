@@ -7,7 +7,7 @@ const app = express();
 const PORT = 3001;
 
 const corsOptions = {
-    origin: ['http://localhost:5173'], // Güvenlik için sadece frontend'e izin ver
+    origin: ['http://localhost:5173', 'https://ping-test-two.vercel.app'], // Güvenlik için sadece frontend'e izin ver
     optionsSuccessStatus: 200
 };
 app.use(cors(corsOptions));
