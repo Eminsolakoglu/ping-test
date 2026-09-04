@@ -85,16 +85,18 @@ function App() {
 
       // 1. PING & JITTER
       let pings = [];
+      const pingUrl = selectedServer.includes('lol') 
+        ? 'https://speed.cloudflare.com/__down?bytes=0' 
+        : 'https://clients3.google.com/generate_204';
+
       for (let i = 0; i < 5; i++) {
         try {
-          const API_URL = import.meta.env.DEV ? 'http://localhost:3001' : 'https://ping-test-ikgp.onrender.com';
-          const pRes = await fetch(`${API_URL}/api/ping?target=${selectedServer}`);
-          const pData = await pRes.json();
-          if (pData.time && pData.time !== -1) {
-            pings.push(pData.time);
-          }
+          const pStart = performance.now();
+          await fetch(pingUrl, { mode: 'no-cors', cache: 'no-store' });
+          const pEnd = performance.now();
+          pings.push(pEnd - pStart);
         } catch (e) {
-          console.error('Ping request failed');
+          console.error('Ping request failed', e);
         }
         setProgress((i + 1) * 4);
         await new Promise(r => setTimeout(r, 100));
